@@ -1,6 +1,4 @@
-## EventMamba
-
-[Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression](https://arxiv.org/abs/2405.06116)
+## EventMamba:[Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression](https://arxiv.org/abs/2405.06116)
 
 ### Citation
 If you find our work useful in your research, please consider citing:
@@ -11,7 +9,7 @@ If you find our work useful in your research, please consider citing:
     journal={arXiv preprint arXiv:2405.06116},
     year={2024}
     }
-and this paper is an expansion of our previous two works:
+and this paper is an expansion of our previous two works [TTPOINT](https://dl.acm.org/doi/abs/10.1145/3581783.3612258?casa_token=z72pohcxZTAAAAAA:pO42EmMVOEp-8PJPx4WBUwJyjrs-K2Z7lkWbZsanCTF72u763LuxdWNPYAXuTKUT4g82yPgPgLbLH6I) and [PEPNet](https://openaccess.thecvf.com/content/CVPR2024/html/Ren_A_Simple_and_Effective_Point-based_Network_for_Event_Camera_6-DOFs_CVPR_2024_paper.html):
 
     @inproceedings{ren2023ttpoint,
     title={Ttpoint: A tensorized point cloud network for lightweight action recognition with event cameras},
