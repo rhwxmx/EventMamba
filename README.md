@@ -1,4 +1,4 @@
-## EventMamba:[Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression](https://arxiv.org/abs/2405.06116)
+## [Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression](https://arxiv.org/abs/2405.06116):EventMamba
 
 ### Citation
 If you find our work useful in your research, please consider citing:
