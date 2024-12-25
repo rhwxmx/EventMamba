@@ -2,8 +2,13 @@
 
 ### Installation
 
-
-
+    conda create -n eventmamba python=3.8
+    conda activate eventmamba
+    conda install pytorch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 pytorch-cuda=12.1 -c pytorch -c nvidia
+    conda install h5py,tqdm,scikit-learn,tensorboard
+    pip install spikingjelly
+    install the cuda kernel: https://github.com/erikwijmans/Pointnet2_PyTorch
+    
 ### Citation
 If you find our work useful in your research, please consider citing:
 
