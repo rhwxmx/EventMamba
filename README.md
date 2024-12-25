@@ -7,15 +7,17 @@
     conda install pytorch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 pytorch-cuda=12.1 -c pytorch -c nvidia
     conda install h5py,tqdm,scikit-learn,tensorboard
     pip install spikingjelly
+    pip install mamba-ssm
     install the cuda kernel: https://github.com/erikwijmans/Pointnet2_PyTorch
-#### Usage
+    
+### Usage
 1. Prepare the data:
 
-        cd datapreocess
+        cd dataprocess
         python generate_xxx.py
 
 2. Put the train.h5 and test.h5 to ./data/xxx/:
-        
+
 3. Run the train script:
         
         python train_classification.py
