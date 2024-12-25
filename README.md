@@ -1,4 +1,4 @@
-## [Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression:EventMamba](https://arxiv.org/abs/2405.06116)
+## [Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression: EventMamba](https://arxiv.org/abs/2405.06116)
 
 ### Installation
 
@@ -8,7 +8,18 @@
     conda install h5py,tqdm,scikit-learn,tensorboard
     pip install spikingjelly
     install the cuda kernel: https://github.com/erikwijmans/Pointnet2_PyTorch
-    
+#### Usage
+1. Prepare the data:
+
+        cd datapreocess
+        python generate_xxx.py
+
+2. Put the train.h5 and test.h5 to ./data/xxx/:
+        
+3. Run the train script:
+        
+        python train_classification.py
+
 ### Citation
 If you find our work useful in your research, please consider citing:
 
@@ -33,4 +44,7 @@ and this paper is an expansion of our previous two works [TTPOINT](https://dl.ac
     booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
     pages={18112--18121},
     year={2024}
-    }        
+    }    
+
+### Acknowledgment
+Thanks to the previous works, PointNet, PointNet++, PointMLP and STNet.    
