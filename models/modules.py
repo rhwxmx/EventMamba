@@ -133,7 +133,6 @@ class LocalGrouper(nn.Module):
         idx = idx.sort(dim=-1)[0]
         grouped_xyz = index_points(xyz, idx)  # [B, npoint, k, 3]
         grouped_points = index_points(points, idx)  # [B, npoint, k, d]
-        min_val_group = torch.min(grouped_points,dim=-2,keepdim=True)[0]
         if self.use_xyz:
             grouped_points = torch.cat([grouped_points, grouped_xyz],dim=-1)  # [B, npoint, k, d+3]
         if self.normalize is not None:

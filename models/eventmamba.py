@@ -51,10 +51,11 @@ class EventMamba(nn.Module):
         ##### define the feature list, the dimension of the feature list in different stages#####
         # self.feature_list = [16,32,64,128] # DVS GESTURE(0.992)
         # self.feature_list = [24,48,96,192] # DVS GESTURE(0.996)
-        self.feature_list = [32,64,128,256]  # DVS ACTION, Daily DVS
+        self.feature_list = [32,64,128,256]  # DVS ACTION, Daily DVS, HMDB51
+        # self.feature_list = [64,128,256,512]
         ##### define the centroid list, the number of the centroid list in different stages#####
-        # self.group_number = [512,256,128,64] # DVS GESTURE, DVS ACTION
-        self.group_number = [1024,512,256,128] # Daily DVS
+        self.group_number = [512,256,128,64] # DVS GESTURE, DVS ACTION
+        # self.group_number = [1024,512,256,128] # Daily DVS, HMDB51
         ##### define the neighbors list, the number of the neighbors list in different stages#####
         self.neighbors = [24,24,24,24]
         self.stages = 3
@@ -115,7 +116,7 @@ class EventMamba(nn.Module):
 if __name__ == '__main__':
     from fvcore.nn import FlopCountAnalysis
     from fvcore.nn import flop_count_table
-    model =  EventMamba(num_classes=10).cuda()
+    model =  EventMamba(num_classes=51).cuda()
     model.eval()
-    flops = FlopCountAnalysis(model, torch.rand(1, 3, 1024).cuda())
+    flops = FlopCountAnalysis(model, torch.rand(1, 3, 2048).cuda())
     print(flop_count_table(flops, max_depth=1))

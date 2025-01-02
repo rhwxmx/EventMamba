@@ -70,7 +70,6 @@ def random_crop(events,w=32,h=32):
     
     return cropped_events.numpy()
 
-
 def get_window_index(events,start,stepsize,windowsize):
     """
     Extract each class from original video
@@ -103,26 +102,3 @@ def get_window_index(events,start,stepsize,windowsize):
     win_end_index=win_end_index[::-1]
    
     return win_start_index,win_end_index
-
-def flip_W(events, W=32):
-    """
-    Flip events horizontally.
-    """
-    events[:, 1] = W - events[:, 1]
-    return events
-
-def flip_H(events, H=32):
-    """
-    Flip events vertically.
-    """
-    events[:, 2] = H - events[:, 2]
-    return events
-
-def reverse_T(events):
-    """
-    reverse events on timesteps.
-    """
-    T_max = events[:, 0].max()
-    T_min = events[:, 0].min()
-    events[:, 0] = T_max - events[:, 0] + T_min
-    return events
