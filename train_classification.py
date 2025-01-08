@@ -28,13 +28,13 @@ def parse_args():
     parser = argparse.ArgumentParser('training')
     parser.add_argument('--use_cpu', action='store_true', default=False, help='use cpu mode')
     parser.add_argument('--gpu', type=str, default='1', help='specify gpu device')
-    parser.add_argument('--batch_size', type=int, default = 64, help='batch size in training')
-    parser.add_argument("--data_path", type=str, default='/home/rhwdmx/github/eventmamba/EventMamba/data/hmdb51/', help="path to dataset")
+    parser.add_argument('--batch_size', type=int, default = 128, help='batch size in training')
+    parser.add_argument("--data_path", type=str, default='/home/rhwdmx/github/eventmamba/EventMamba/data/hmdb51/0.5/', help="path to dataset")
     parser.add_argument('--num_category', default=51, type=int, help='the category of action recogniton 10,12,51')
     parser.add_argument('--num_point', type=int, default=8192, help='Point Number')
     parser.add_argument("--log_path", type=str, default='./tensorboard_log/', help="path to tesnorboard_log")
-    parser.add_argument("--log_name", type=str, default='/hmdb51_8192_1024_350', help="path to tesnorboard_log")
-    parser.add_argument('--epoch', default=350, type=int, help='number of epoch in training')
+    parser.add_argument("--log_name", type=str, default='/hmdb51_2048_1024_32_nomark_0.5_1024_v1', help="path to tesnorboard_log")
+    parser.add_argument('--epoch', default=150, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--optimizer', type=str, default='AdamW', help='optimizer for training: Adam or SGD')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
@@ -46,7 +46,7 @@ def inplace_relu(m):
     if classname.find('ReLU') != -1:
         m.inplace=True
 
-def validate(net, testloader, criterion, device, mark, args):
+def validate(net, testloader, criterion, device, mark_test, args):
     net.eval()
     test_loss = 0
     correct = 0
@@ -60,7 +60,7 @@ def validate(net, testloader, criterion, device, mark, args):
             data, label = data.to(device), label.to(device).squeeze()
             data = data.permute(0, 2, 1)
             logits = net(data)
-            loss = criterion(logits, label)
+            loss = criterion(logits, label, net)
             test_loss += loss.item()
             preds = logits.max(dim=1)[1]
 
@@ -77,7 +77,8 @@ def validate(net, testloader, criterion, device, mark, args):
             count = 0
             correct_seq= 0
             index = 0
-            for i in range(len(label_seq[1])-1):
+            mark = mark_test if mark_test is not None else label_seq[1]
+            for i in range(len(label_seq[1])-2):
                 #### if mark is different, we run this code###
                 if (mark[i] != mark[i+1]) or (i == len(label_seq[1])-2):
                     ####statistic the most common label in the sequence####
@@ -115,7 +116,7 @@ def train(net, trainloader, optimizer, criterion, device, args):
         data = data.permute(0, 2, 1)
         optimizer.zero_grad()
         logits = net(data)
-        loss = criterion(logits, label)
+        loss = criterion(logits, label, net)
         loss.backward()
         optimizer.step()
         train_loss += loss.item()
@@ -136,11 +137,11 @@ def train(net, trainloader, optimizer, criterion, device, args):
         "time": time_cost
     }
 
-def cal_loss(pred, gold, smoothing=True):
+def cal_loss(pred, gold, model,smoothing=True):
     ##### Calculate cross entropy loss, apply label smoothing if needed.#####
     gold = gold.contiguous().view(-1)
     if smoothing:
-        eps = 0.2
+        eps = 0.5
         n_class = pred.size(1)
         one_hot = torch.zeros_like(pred).scatter(1, gold.view(-1, 1), 1)
         one_hot = one_hot * (1 - eps) + (1 - one_hot) * eps / (n_class - 1)
@@ -148,6 +149,7 @@ def cal_loss(pred, gold, smoothing=True):
         loss = -(one_hot * log_prb).sum(dim=1).mean()
     else:
         loss = F.cross_entropy(pred, gold, reduction='mean')
+
     return loss
 
 def progress_bar(current, total, msg=None):
@@ -267,7 +269,11 @@ def main(args):
     log_string('Load dataset ...')
     TRAIN_FILES = [args.data_path+"train.h5"]
     TEST_FILES = [args.data_path+"test.h5"]
-    current_data_test, current_label_test, current_mark_test = provider_data.load_h5_mark(TEST_FILES[0])
+    try:
+        current_data_test, current_label_test, current_mark_test = provider_data.load_h5_mark(TEST_FILES[0])
+    except:
+        current_data_test, current_label_test = provider_data.load_h5(TEST_FILES[0])
+        current_mark_test = None
     print("test",len(current_data_test),current_data_test.shape)
     current_label_test = np.squeeze(current_label_test)
     current_data_test = torch.from_numpy(current_data_test)
@@ -275,8 +281,12 @@ def main(args):
     current_data_test = current_data_test.reshape(-1,args.num_point,3)
     dataset_test = torch.utils.data.TensorDataset(current_data_test, current_label_test)
     testDataLoader = torch.utils.data.DataLoader(dataset_test, batch_size=args.batch_size, shuffle=False, num_workers=0, drop_last=False)
-    current_data_train, current_label_train,current_mark_sum = provider_data.load_h5_mark(TRAIN_FILES[0])
-    print("train",len(current_data_train))
+    try:
+        current_data_train, current_label_train,current_mark_sum = provider_data.load_h5_mark(TRAIN_FILES[0])
+    except:
+        current_data_train, current_label_train = provider_data.load_h5(TRAIN_FILES[0])
+        current_mark_train = None
+    print("train",len(current_data_train),current_data_train.shape)
     current_label_train = np.squeeze(current_label_train)  
     print(current_data_train.shape,current_label_train.shape)
     current_data_train = torch.from_numpy(current_data_train)
@@ -292,7 +302,7 @@ def main(args):
     best_test_loss = float("inf")
     best_train_loss = float("inf")
 
-    from models.eventmamba import EventMamba
+    from models.eventmamba_v1 import EventMamba
     classifier = EventMamba(num_classes=args.num_category)
     criterion = cal_loss
     classifier.apply(inplace_relu)
@@ -331,7 +341,7 @@ def main(args):
         ##### save the training metrice into tensorboard #####
         writer.add_scalar('Loss/train', train_out["loss"], epoch)
         writer.add_scalar('Accuracy/train', train_out["acc"], epoch)
-        ##### testing #####
+        #### testing #####
         test_out = validate(classifier, testDataLoader, criterion, device,current_mark_test,args)
         if test_out["test_acc_seq"] > best_test_seq:
             best_test_seq = test_out["test_acc_seq"]

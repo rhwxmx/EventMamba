@@ -46,7 +46,7 @@ class Linear2Layer(nn.Module):
         return self.act(self.net2(self.net1(x)) + x)
 
 class EventMamba(nn.Module):
-    def __init__(self,num_classes):
+    def __init__(self,num_classes=10):
         super().__init__()
         ##### define the feature list, the dimension of the feature list in different stages#####
         # self.feature_list = [16,32,64,128] # DVS GESTURE(0.992)
@@ -54,8 +54,8 @@ class EventMamba(nn.Module):
         self.feature_list = [32,64,128,256]  # DVS ACTION, Daily DVS, HMDB51
         # self.feature_list = [64,128,256,512]
         ##### define the centroid list, the number of the centroid list in different stages#####
-        self.group_number = [512,256,128,64] # DVS GESTURE, DVS ACTION
-        # self.group_number = [1024,512,256,128] # Daily DVS, HMDB51
+        #self.group_number = [512,256,128,64] # DVS GESTURE, DVS ACTION
+        self.group_number = [1024,512,256,128] # Daily DVS, HMDB51
         ##### define the neighbors list, the number of the neighbors list in different stages#####
         self.neighbors = [24,24,24,24]
         self.stages = 3
@@ -80,13 +80,13 @@ class EventMamba(nn.Module):
             global_conv = Linear2Layer(self.feature_list[i+1],1,1)
             self.global_conv_list.append(global_conv)
 
-        self.classifier = nn.Sequential(
-            nn.Linear(self.feature_list[-1], 256),
-            nn.BatchNorm1d(256),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
-            nn.Linear(256, num_classes)
-        )
+            self.classifier = nn.Sequential(
+                nn.Linear(self.feature_list[-1], 256),
+                nn.BatchNorm1d(256),
+                nn.ReLU(inplace=True),
+                nn.Dropout(0.5),
+                nn.Linear(256, num_classes)
+            )
     def forward(self, x: torch.Tensor):
         ##### the shape of x is [B, 3, N] #####
         ##### the shape of xyz is [B, N, 3] #####

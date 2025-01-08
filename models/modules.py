@@ -127,7 +127,6 @@ class LocalGrouper(nn.Module):
         fps_idx,indices = torch.sort(fps_idx, dim=1)
         new_xyz = index_points(xyz, fps_idx)  # [B, npoint, 3]
         new_points = index_points(points, fps_idx)  # [B, npoint, d]
-        # idx = knn_point(self.kneighbors, xyz, new_xyz)
         dists = square_distance(new_points, points)  # B x npoint x N
         idx = dists.argsort()[:, :, :self.kneighbors]  # B x npoint x K
         idx = idx.sort(dim=-1)[0]
@@ -146,4 +145,3 @@ class LocalGrouper(nn.Module):
             grouped_points = self.affine_alpha*grouped_points + self.affine_beta
         new_points = torch.cat([grouped_points, new_points.view(B, S, 1, -1).repeat(1, 1, self.kneighbors, 1)], dim=-1)
         return new_xyz, new_points
-
