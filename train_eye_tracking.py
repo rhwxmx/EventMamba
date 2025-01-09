@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument('--use_cpu', action='store_true', default=False, help='use cpu mode')
     parser.add_argument('--gpu', type=str, default='0', help='specify gpu device')
     parser.add_argument("--eyetracking_log_path", type=str, default='./tensorboard_log/', help="path to eyetracking_log")
-    parser.add_argument("--log_name", type=str, default='/3et_1024_512_v1_DATASET', help="path to eyetracking_log")
+    parser.add_argument("--log_name", type=str, default='/3et_1024_512_v1', help="path to eyetracking_log")
     parser.add_argument('--train_h5_path', type=str, default='./data/3et/train.h5', help='train_data')
     parser.add_argument('--test_h5_path', type=str, default='./data/3et/test.h5', help='test_data')
     parser.add_argument('--save_path', type=str, default='./checkpoint', help='model_path')

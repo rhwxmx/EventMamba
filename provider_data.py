@@ -40,11 +40,9 @@ def load_h5_and_resample(h5_filename, sample_size=1024):
                 x = x[indices]
                 y = y[indices]
                 t = t[indices]
-
             if current_sample_size >= 1024:
                 sample_data = np.stack((t,x,y), axis=-1)
                 data.append(sample_data)
                 sample_label = group.attrs['label']
                 labels.append(sample_label)
-
     return (data, labels)
