@@ -1,6 +1,6 @@
 ## [Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression: EventMamba](https://arxiv.org/abs/2405.06116)
 
-<img src="figures/eventmamba.png" alt="EventMamba's architecture" width="500" />
+<img src="figures/eventmamba.png" alt="EventMamba's architecture" width="800" />
 
 ### Installation
 
