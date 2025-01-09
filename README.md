@@ -1,5 +1,7 @@
 ## [Rethinking Efficient and Effective Point-based Networks for Event Camera Classification and Regression: EventMamba](https://arxiv.org/abs/2405.06116)
 
+<img src="figures/eventmamba.png" alt="EventMamba's architecture" width="500" />
+
 ### Installation
 
     conda create -n eventmamba python=3.8
@@ -18,9 +20,18 @@
 
 2. Put the train.h5 and test.h5 to ./data/xxx/:
 
-3. Run the train script:
+3. Modify the num_class, data_path, log_name and others.
+
+4. Run the train script:
+    For action recognition:
         
         python train_classification.py
+    For camera pose relocalization:
+
+        python train_odometry.py
+    For eye tracking task:
+
+        python train_eye_tracking.py
 
 ### Citation
 If you find our work useful in your research, please consider citing:
