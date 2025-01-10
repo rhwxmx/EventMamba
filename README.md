@@ -23,6 +23,7 @@
 3. Modify the num_class, data_path, log_name and others.
 
 4. Run the train script:
+    
     For action recognition:
         
         python train_classification.py
@@ -33,6 +34,21 @@
 
         python train_eye_tracking.py
 
+### Download
+
+| Dataset    | Split    | data, log and pretrained model |
+| ---------- | -------- | -------- |
+| DVSGesture | offical  |   DOWNLOAD  |
+| DailyDVS   | filename | DOWNLOAD     |
+| DVSAction  | offical  | DOWNLOAD     |
+| HMDB51-DVS     | filename     | DOWNLOAD     |
+| UCF101-DVS     | filename    | DOWNLOAD     |
+| HMDB51-DVS | sliding window     | DOWNLOAD     |
+| UCF101-DVS | sliding window     | DOWNLOAD     |
+| THU-CHL    | offical     | DOWNLOAD     |
+| IJRR       |   sliding window   | DOWNLOAD     |
+| 3ET        | offical     | DOWNLOAD     |
+    
 ### Citation
 If you find our work useful in your research, please consider citing:
 

@@ -33,7 +33,7 @@ def parse_args():
     parser.add_argument('--num_category', default=51, type=int, help='the category of action recogniton 10,12,51')
     parser.add_argument('--num_point', type=int, default=2048, help='Point Number')
     parser.add_argument("--log_path", type=str, default='./tensorboard_log/', help="path to tesnorboard_log")
-    parser.add_argument("--log_name", type=str, default='/hmdb51_2048_1024_32_0.2', help="path to tesnorboard_log")
+    parser.add_argument("--log_name", type=str, default='/hmdb51', help="path to tesnorboard_log")
     parser.add_argument('--epoch', default=150, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
     parser.add_argument('--optimizer', type=str, default='AdamW', help='optimizer for training: Adam or SGD')
@@ -141,7 +141,7 @@ def cal_loss(pred, gold, model,smoothing=True):
     ##### Calculate cross entropy loss, apply label smoothing if needed.#####
     gold = gold.contiguous().view(-1)
     if smoothing:
-        eps = 0.2
+        eps = 0.5
         n_class = pred.size(1)
         one_hot = torch.zeros_like(pred).scatter(1, gold.view(-1, 1), 1)
         one_hot = one_hot * (1 - eps) + (1 - one_hot) * eps / (n_class - 1)
