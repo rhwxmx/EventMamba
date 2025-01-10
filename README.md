@@ -36,7 +36,7 @@
 
 ### Download
 
-| Dataset    | Split    | data, log and pretrained model |
+| Dataset    | Split    | Data, log and pretrained model |
 | ---------- | -------- | -------- |
 | DVSGesture | offical  |   DOWNLOAD  |
 | DailyDVS   | filename | DOWNLOAD     |
@@ -46,9 +46,9 @@
 | HMDB51-DVS | sliding window     | DOWNLOAD     |
 | UCF101-DVS | sliding window     | DOWNLOAD     |
 | THU-CHL    | offical     | DOWNLOAD     |
-| IJRR       |   sliding window   | DOWNLOAD     |
+| IJRR       |   sliding window   | [DOWNLOAD](https://pan.baidu.com/s/1AxzvFYAD9dLnYrMIpwkuag?pwd=IJRR) extract code: IJRR    |
 | 3ET        | offical     | DOWNLOAD     |
-    
+
 ### Citation
 If you find our work useful in your research, please consider citing:
 
