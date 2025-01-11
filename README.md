@@ -34,18 +34,34 @@
 
         python train_eye_tracking.py
 
+### Configuration
+
+| Dataset              | Version | Dimension     | Group            | Accuracy |
+| -------------------- | ------- | ------------- | ---------------- | -------- |
+| DVSGesture           | V2      | [16, 32, 64]  | [512, 256, 128]  | 0.992    |
+| DVSGesture           | V2      | [24, 48, 96]  | [512, 256, 128]  | 0.996    |
+| DailyDVS             | V2      | [32, 64, 128] | [1024, 512, 256] | 0.993    |
+| DVSAction            | V2      | [32, 64, 128] | [512, 256, 128]  | 0.893    |
+| HMDB51-DVS(filename) | V1      | [32, 64, 128] | [1024, 512, 256] | 0.604    |
+| HMDB51-DVS(sliding)  | V1      | [32, 64, 128] | [1024, 512, 256] | 0.864    |
+| UCF101-DVS(filename) | V2      | [32, 64, 128] | [1024, 512, 256] | 0.900    |
+| UCF101-DVS(sliding)  | V1      | [32, 64, 128] | [1024, 512, 256] | 0.979    |
+| THU-CHA              | V1      | [32, 64, 128] | [1024, 512, 256] | 0.595    |
+| IJRR                 | V1      | [32, 64, 128] | [512, 256, 128]  | -        |
+| 3ET(+sigmoid)        | V1      | [32, 64, 128] |  [512, 256, 128] | 0.951    |
+
 ### Download
 
 | Dataset    | Split    | Data, log and pretrained model |
 | ---------- | -------- | -------- |
 | DVSGesture | offical  |   [DOWNLOAD](https://pan.baidu.com/s/1uNM4tc3WHwDIB8BaR-Ygcg?pwd=GEST) extract code: GEST |
-| DailyDVS   | filename | [DOWNLOAD](https://pan.baidu.com/s/1zDERP3MBhk9XL6jcfn1Ggw?pwd=DAIL) extract code: DAIL)     |
-| DVSAction  | offical  | [DOWNLOAD](https://pan.baidu.com/s/1EzeXI5xb9OlAnw-QpSYZ9g?pwd=ACTI) extract code: ACTI)     |
-| HMDB51-DVS     | filename/sliding window     | DOWNLOAD     |
+| DailyDVS   | filename | [DOWNLOAD](https://pan.baidu.com/s/1zDERP3MBhk9XL6jcfn1Ggw?pwd=DAIL) extract code: DAIL     |
+| DVSAction  | offical  | [DOWNLOAD](https://pan.baidu.com/s/1EzeXI5xb9OlAnw-QpSYZ9g?pwd=ACTI) extract code: ACTI     |
+| HMDB51-DVS     | filename/sliding window     | [DOWNLOAD](https://pan.baidu.com/s/1w7SYrAVDrEK0t-Q4CulaAw?pwd=HMDB) extract code:HMDB)     |
 | UCF101-DVS     | filename/sliding window    | DOWNLOAD     |
 | THU-CHL    | offical     | DOWNLOAD     |
 | IJRR       |   sliding window   | [DOWNLOAD](https://pan.baidu.com/s/1AxzvFYAD9dLnYrMIpwkuag?pwd=IJRR) extract code: IJRR  |
-| 3ET        | offical     | [DOWNLOAD](https://pan.baidu.com/s/1XPvl__K-R-B1uTlOhPaeeA?pwd=3ETE) extract code: 3ETE)  |
+| 3ET        | offical     | [DOWNLOAD](https://pan.baidu.com/s/1XPvl__K-R-B1uTlOhPaeeA?pwd=3ETE) extract code: 3ETE  |
 
 ### Citation
 If you find our work useful in your research, please consider citing:
