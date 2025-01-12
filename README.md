@@ -44,7 +44,7 @@
 | DVSAction            | V2      | [32, 64, 128] | [512, 256, 128]  | 0.893    |
 | HMDB51-DVS (filename) | V1      | [32, 64, 128] | [1024, 512, 256] | 0.604    |
 | HMDB51-DVS (sliding)  | V1      | [32, 64, 128] | [1024, 512, 256] | 0.864    |
-| UCF101-DVS (filename) | V2      | [32, 64, 128] | [1024, 512, 256] | 0.900    |
+| UCF101-DVS (filename) | V2      | [32, 64, 128] | [1024, 512, 256] | 0.903    |
 | UCF101-DVS (sliding)  | V1      | [32, 64, 128] | [1024, 512, 256] | 0.979    |
 | THU-CHA              | V1      | [32, 64, 128] | [1024, 512, 256] | 0.595    |
 | IJRR                 | V1      | [32, 64, 128] | [512, 256, 128]  | -        |
@@ -58,7 +58,7 @@
 | DailyDVS   | filename | [DOWNLOAD](https://pan.baidu.com/s/1zDERP3MBhk9XL6jcfn1Ggw?pwd=DAIL) extract code: DAIL     |
 | DVSAction  | offical  | [DOWNLOAD](https://pan.baidu.com/s/1EzeXI5xb9OlAnw-QpSYZ9g?pwd=ACTI) extract code: ACTI     |
 | HMDB51-DVS     | filename/sliding window     | [DOWNLOAD](https://pan.baidu.com/s/1w7SYrAVDrEK0t-Q4CulaAw?pwd=HMDB) extract code:HMDB |
-| UCF101-DVS     | filename/sliding window    | DOWNLOAD     |
+| UCF101-DVS     | filename/sliding window    | [DOWNLOAD](https://pan.baidu.com/s/11admC1576VM0Vt7tZTSbJw?pwd=UCF1) extract code:UCF1     |
 | THU-CHL    | offical     | DOWNLOAD     |
 | IJRR       |   sliding window   | [DOWNLOAD](https://pan.baidu.com/s/1AxzvFYAD9dLnYrMIpwkuag?pwd=IJRR) extract code: IJRR  |
 | 3ET        | offical     | [DOWNLOAD](https://pan.baidu.com/s/1XPvl__K-R-B1uTlOhPaeeA?pwd=3ETE) extract code: 3ETE  |
