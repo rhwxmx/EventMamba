@@ -63,7 +63,7 @@
 | IJRR       |   sliding window   | [DOWNLOAD](https://pan.baidu.com/s/1AxzvFYAD9dLnYrMIpwkuag?pwd=IJRR) extract code: IJRR  |
 | 3ET        | offical     | [DOWNLOAD](https://pan.baidu.com/s/1XPvl__K-R-B1uTlOhPaeeA?pwd=3ETE) extract code: 3ETE  |
 
-if you want use the pretarined model, please use the (dists = square_distance(new_xyz, xyz)) for version 1 and use the (dists = square_distance(new_points, points)) for version 2 in module.py.
+if you want use the pretrained model, please use the (dists = square_distance(new_xyz, xyz)) for version 1 and use the (dists = square_distance(new_points, points)) for version 2 in module.py.
 
 ### Citation
 If you find our work useful in your research, please consider citing:
