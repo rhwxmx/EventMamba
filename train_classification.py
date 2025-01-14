@@ -28,15 +28,15 @@ def parse_args():
     parser = argparse.ArgumentParser('training')
     parser.add_argument('--use_cpu', action='store_true', default=False, help='use cpu mode')
     parser.add_argument('--gpu', type=str, default='1', help='specify gpu device')
-    parser.add_argument('--batch_size', type=int, default = 128, help='batch size in training')
-    parser.add_argument("--data_path", type=str, default='/home/rhwdmx/github/eventmamba/EventMamba/data/hmdb51/', help="path to dataset")
-    parser.add_argument('--num_category', default=51, type=int, help='the category of action recogniton 10,12,51')
+    parser.add_argument('--batch_size', type=int, default = 32, help='batch size in training')
+    parser.add_argument("--data_path", type=str, default='your data path', help="path to dataset")
+    parser.add_argument('--num_category', default=10, type=int, help='the category of action recogniton 10,12,50,51,101')
     parser.add_argument('--num_point', type=int, default=2048, help='Point Number')
     parser.add_argument("--log_path", type=str, default='./tensorboard_log/', help="path to tesnorboard_log")
-    parser.add_argument("--log_name", type=str, default='/hmdb51', help="path to tesnorboard_log")
+    parser.add_argument("--log_name", type=str, default='/your log name', help="path to tesnorboard_log")
     parser.add_argument('--epoch', default=150, type=int, help='number of epoch in training')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='learning rate in training')
-    parser.add_argument('--optimizer', type=str, default='AdamW', help='optimizer for training: Adam or SGD')
+    parser.add_argument('--optimizer', type=str, default='AdamW', help='optimizer for training: Adam, AdamW or SGD')
     parser.add_argument('--log_dir', type=str, default=None, help='experiment root')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='decay rate')
     return parser.parse_args()
@@ -141,7 +141,7 @@ def cal_loss(pred, gold, model,smoothing=True):
     ##### Calculate cross entropy loss, apply label smoothing if needed.#####
     gold = gold.contiguous().view(-1)
     if smoothing:
-        eps = 0.5
+        eps = 0.2
         n_class = pred.size(1)
         one_hot = torch.zeros_like(pred).scatter(1, gold.view(-1, 1), 1)
         one_hot = one_hot * (1 - eps) + (1 - one_hot) * eps / (n_class - 1)
@@ -150,6 +150,11 @@ def cal_loss(pred, gold, model,smoothing=True):
     else:
         loss = F.cross_entropy(pred, gold, reduction='mean')
 
+    # l2_reg = torch.tensor(0., requires_grad=True)
+    # for param in model.parameters():
+    #     l2_reg = l2_reg + torch.norm(param)
+    # l2_lambda = 0.001
+    # loss += l2_reg*l2_lambda
     return loss
 
 def progress_bar(current, total, msg=None):
@@ -311,9 +316,10 @@ def main(args):
 
     ##### try to load the pretrain model #####    
     try:
-        checkpoint = torch.load('last_checkpoint.pth')
+        checkpoint = torch.load('best_checkpoint.pth')
         start_epoch = checkpoint['epoch']
-        classifier.load_state_dict(checkpoint['net'])
+        start_epoch = 0
+        classifier.load_state_dict(checkpoint['net'], strict=True)
         log_string('Use pretrain model')
     except:
         log_string('No existing model, starting training from scratch...')

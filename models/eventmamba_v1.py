@@ -59,14 +59,12 @@ class EventMamba(nn.Module):
         # self.feature_list = [6,32,64,128]
         self.feature_list = [6,64,128,256]
         # self.feature_list = [6,128,256,512]
-        
-        # self.group = LocalGrouper(3, 512, 24, False, "anchor")
-        # self.group_1 =LocalGrouper(self.feature_list[1], 256, 24, False, "anchor")
-        # self.group_2 =LocalGrouper(self.feature_list[2], 128, 24, False, "anchor")
-        self.group = LocalGrouper(3, 1024, 24, False, "anchor")
-        self.group_1 =LocalGrouper(self.feature_list[1], 512, 24, False, "anchor")
-        self.group_2 =LocalGrouper(self.feature_list[2], 256, 24, False, "anchor")
-
+        self.group = LocalGrouper(3, 512, 24, False, "anchor")
+        self.group_1 =LocalGrouper(self.feature_list[1], 256, 24, False, "anchor")
+        self.group_2 =LocalGrouper(self.feature_list[2], 128, 24, False, "anchor")
+        # self.group = LocalGrouper(3, 1024, 24, False, "anchor")
+        # self.group_1 =LocalGrouper(self.feature_list[1], 512, 24, False, "anchor")
+        # self.group_2 =LocalGrouper(self.feature_list[2], 256, 24, False, "anchor")
         self.embed_dim = Linear1Layer(self.feature_list[0],self.feature_list[1],1)
         self.conv1 = Linear2Layer(self.feature_list[1],1,1)
         self.conv1_1 = Linear2Layer(self.feature_list[1],1,1)
@@ -140,4 +138,8 @@ class EventMamba(nn.Module):
         attn = self.attention_4(x)
         x = torch.bmm(attn.unsqueeze(1), x).squeeze(1)
         x = self.classifier(x)
+
+        # x = torch.max(x, 2, keepdim=True)[0]
+        # x = x.view(-1, self.feature_list[-1])
+        # x = self.classifier(x)
         return x

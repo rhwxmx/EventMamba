@@ -123,11 +123,15 @@ class LocalGrouper(nn.Module):
         S = self.groups
         xyz = xyz.contiguous()  # xyz [btach, points, xyz]
         fps_idx = furthest_point_sample(xyz, self.groups).long()  # [B, npoint]
+        #### use the cuda to accelerate the FPS####
         # fps_idx = farthest_point_sample(xyz, self.groups).long()
         fps_idx,indices = torch.sort(fps_idx, dim=1)
         new_xyz = index_points(xyz, fps_idx)  # [B, npoint, 3]
         new_points = index_points(points, fps_idx)  # [B, npoint, d]
-        dists = square_distance(new_points, points)  # B x npoint x N
+        # idx = knn_point(self.kneighbors, xyz, new_xyz)
+        #### if use the feature distance to select the neighbors, may condauct overfitting, flexiblely to choose xyz or features####
+        dists = square_distance(new_xyz, xyz)
+        # dists = square_distance(new_points, points)  # B x npoint x N
         idx = dists.argsort()[:, :, :self.kneighbors]  # B x npoint x K
         idx = idx.sort(dim=-1)[0]
         grouped_xyz = index_points(xyz, idx)  # [B, npoint, k, 3]
